@@ -1,0 +1,31 @@
+= read only cypher
+
+== Overview
+
+Sometimes you want to limit the usage of Cypher to read only mode in your application. This project provides an approach based on on transaction event handler doing that.
+
+== How it works
+
+Using a Neo4j kernel extension a TransactionEventHandler is initialized. The TransactionEventHandler checks a boolean ThreadLocal
+variable. Depending on this, the TransactionData is inspected for any writes. If found an exception is thrown to veto
+committing this transaction.
+
+When running Neo4j as a server another piece is missing. We somehow need to set the ThreadLocal mentioned above.
+A http://neo4j.com/docs/stable/security-server.html#_server_authorization_rules[security rule] is set up and configured that sets a ThreadLocal variable to true or false depending on a specific HTTP header 'X-ReadOnly'.
+
+== Install
+
+Build the jar file:
+[source,bash]
+----
+./gradlew assemble
+----
+
+Copy 'build/libs/read-only-cypher.jar' to your Neo4j's plugins folder. In Neo4j's 'conf/neo4j-server.properties' set up
+the security rule:
+
+[source]
+----
+org.neo4j.server.rest.security_rules=org.neo4j.rocypher.Rule
+----
+
