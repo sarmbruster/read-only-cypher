@@ -19,6 +19,7 @@ ext {
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.4.1"
     compile "org.neo4j:neo4j-cypher:$neo4jVersion"
+    compile "org.neo4j.app:neo4j-server:$neo4jVersion"
     //testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
     testCompile "org.neo4j.contrib:neo4j-spock-extension:0.5.2"
 }
