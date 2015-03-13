@@ -1,16 +1,14 @@
 package org.neo4j.rocypher;
 
-import org.neo4j.graphdb.event.LabelEntry;
 import org.neo4j.graphdb.event.TransactionData;
 import org.neo4j.graphdb.event.TransactionEventHandler;
-import org.neo4j.helpers.collection.Iterables;
 
 /**
  * @author Stefan Armbruster
  */
 public class ReadOnlyTransactionEventHandler extends TransactionEventHandler.Adapter {
 
-    static ThreadLocal<Boolean> readOnlyThreadLocal = new ThreadLocal() {
+    static ThreadLocal<Boolean> readOnlyThreadLocal = new ThreadLocal<Boolean>() {
         @Override
         protected Boolean initialValue() {
             return false;
@@ -46,7 +44,7 @@ public class ReadOnlyTransactionEventHandler extends TransactionEventHandler.Ada
         return null;
     }
 
-    private boolean notEmpty(Iterable<? extends Object> iterable) {
+    private boolean notEmpty(Iterable iterable) {
         return iterable.iterator().hasNext();
     }
 }
